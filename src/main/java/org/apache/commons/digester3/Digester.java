@@ -980,11 +980,6 @@ public class Digester
             return;
         }
 
-        if ( saxLog.isDebugEnabled() )
-        {
-            saxLog.debug( "characters(" + new String( buffer, start, length ) + ")" );
-        }
-
         bodyText.append( buffer, start, length );
     }
 
@@ -1016,12 +1011,12 @@ public class Digester
             }
             catch ( Exception e )
             {
-                log.error( "Finish event threw exception", e );
+                log.debug( "Finish event threw exception", e );
                 throw createSAXException( e );
             }
             catch ( Error e )
             {
-                log.error( "Finish event threw error", e );
+                log.debug( "Finish event threw error", e );
                 throw e;
             }
         }
@@ -1046,14 +1041,9 @@ public class Digester
 
         boolean debug = log.isDebugEnabled();
 
-        if ( debug )
+        if ( debug && saxLog.isDebugEnabled())
         {
-            if ( saxLog.isDebugEnabled() )
-            {
-                saxLog.debug( "endElement(" + namespaceURI + "," + localName + "," + qName + ")" );
-            }
-            log.debug( "  match='" + match + "'" );
-            log.debug( "  bodyText='" + bodyText + "'" );
+            saxLog.debug( "endElement(" + namespaceURI + "," + localName + "," + qName + ")" );
         }
 
         // the actual element name is either in localName or qName, depending
@@ -1087,30 +1077,19 @@ public class Digester
                 }
                 catch ( Exception e )
                 {
-                    log.error( "Body event threw exception", e );
+                    log.debug( "Body event threw exception", e );
                     throw createSAXException( e );
                 }
                 catch ( Error e )
                 {
-                    log.error( "Body event threw error", e );
+                    log.debug( "Body event threw error", e );
                     throw e;
                 }
-            }
-        }
-        else
-        {
-            if ( debug )
-            {
-                log.debug( "  No rules found matching '" + match + "'." );
             }
         }
 
         // Recover the body text from the surrounding element
         bodyText = bodyTexts.pop();
-        if ( debug )
-        {
-            log.debug( "  Popping body text '" + bodyText.toString() + "'" );
-        }
 
         // Fire "end" events for all relevant rules in reverse order
         if ( rules != null )
@@ -1129,12 +1108,12 @@ public class Digester
                 }
                 catch ( Exception e )
                 {
-                    log.error( "End event threw exception", e );
+                    log.debug( "End event threw exception", e );
                     throw createSAXException( e );
                 }
                 catch ( Error e )
                 {
-                    log.error( "End event threw error", e );
+                    log.debug( "End event threw error", e );
                     throw e;
                 }
             }
@@ -1294,17 +1273,8 @@ public class Digester
             return;
         }
 
-        if ( saxLog.isDebugEnabled() )
-        {
-            saxLog.debug( "startElement(" + namespaceURI + "," + localName + "," + qName + ")" );
-        }
-
         // Save the body text accumulated for our surrounding element
         bodyTexts.push( bodyText );
-        if ( debug )
-        {
-            log.debug( "  Pushing body text '" + bodyText.toString() + "'" );
-        }
         bodyText = new StringBuilder();
 
         // the actual element name is either in localName or qName, depending
@@ -1351,12 +1321,12 @@ public class Digester
                 }
                 catch ( Exception e )
                 {
-                    log.error( "Begin event threw exception", e );
+                    log.debug( "Begin event threw exception", e );
                     throw createSAXException( e );
                 }
                 catch ( Error e )
                 {
-                    log.error( "Begin event threw error", e );
+                    log.debug( "Begin event threw error", e );
                     throw e;
                 }
             }
@@ -1643,13 +1613,13 @@ public class Digester
         }
         catch ( IOException e )
         {
-            log.error( format( "An error occurred while reading stream from '%s', see nested exceptions", systemId ),
+            log.debug( format( "An error occurred while reading stream from '%s', see nested exceptions", systemId ),
                        e );
             throw e;
         }
         catch ( SAXException e )
         {
-            log.error( format( "An error occurred while parsing XML from '%s', see nested exceptions", systemId ),
+            log.debug( format( "An error occurred while parsing XML from '%s', see nested exceptions", systemId ),
                        e );
             throw e;
         }

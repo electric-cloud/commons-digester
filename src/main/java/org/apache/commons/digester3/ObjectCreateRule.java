@@ -340,6 +340,7 @@ public class ObjectCreateRule
             clazz = getDigester().getClassLoader().loadClass( realClassName );
         }
         Object instance;
+        Constructor<?> constructor;
         if ( constructorArgumentTypes == null || constructorArgumentTypes.length == 0 )
         {
             if ( getDigester().getLogger().isDebugEnabled() )
@@ -351,13 +352,15 @@ public class ObjectCreateRule
                                     clazz.getName() ) );
             }
 
-            instance = clazz.newInstance();
+            constructor = clazz.getDeclaredConstructor((Class[])null);
+            constructor.setAccessible(true);
+            instance = constructor.newInstance((Object[])null);
         }
         else
         {
             if ( proxyManager == null )
             {
-                Constructor<?> constructor = getAccessibleConstructor( clazz, constructorArgumentTypes );
+                constructor = getAccessibleConstructor( clazz, constructorArgumentTypes );
 
                 if ( constructor == null )
                 {

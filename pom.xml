@@ -26,10 +26,10 @@
 
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-digester3</artifactId>
-  <version>3.2</version>
+  <version>3.2-PATCH5</version>
   <packaging>jar</packaging>
 
-  <name>Apache Commons Digester</name>
+  <name>Apache Commons Digester with custom CloudBees patches</name>
   <description>
     The Apache Commons Digester package lets you configure an XML to Java
     object mapping module which triggers certain actions called rules whenever
@@ -148,9 +148,9 @@
   </contributors>
 
   <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/digester/tags/DIGESTER3_3_2_RC2</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/digester/tags/DIGESTER3_3_2_RC2</developerConnection>
-    <url>http://svn.apache.org/viewvc/commons/proper/digester/tags/DIGESTER3_3_2_RC2</url>
+    <connection>scm:git:git://github.com:electric-cloud/commons-digester.git</connection>
+    <developerConnection>scm:git:ssh:git@github.com:electric-cloud/commons-digester.git</developerConnection>
+    <url>https://github.com/electric-cloud/commons-digester/releases/tag/DIGESTER3_3_2-PATCH5</url>
   </scm>
   <issueManagement>
     <system>jira</system>

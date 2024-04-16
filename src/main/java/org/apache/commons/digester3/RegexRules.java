@@ -21,6 +21,8 @@ package org.apache.commons.digester3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import org.xml.sax.Attributes;
 
@@ -47,6 +49,8 @@ public class RegexRules
 
     /** The regex strategy used by this RegexRules */
     private RegexMatcher matcher;
+
+    private Map<String, List<Rule>> matchCache = new WeakHashMap<String, List<Rule>>();
 
     // --------------------------------------------------------- Constructor
 
@@ -103,6 +107,7 @@ public class RegexRules
     public void clear()
     {
         registeredRules.clear();
+        matchCache.clear();
     }
 
     /**
@@ -118,14 +123,19 @@ public class RegexRules
         //
         // XXX FIX ME - Time And Optimize
         //
-        ArrayList<Rule> rules = new ArrayList<Rule>( registeredRules.size() );
-        for ( RegisteredRule rr : registeredRules )
+
+        List<Rule> rules = matchCache.get( pattern );
+        if ( rules == null )
         {
-            if ( matcher.match( pattern, rr.pattern ) )
-            {
-                rules.add( rr.rule );
+            rules = new ArrayList<Rule>(registeredRules.size());
+            for (RegisteredRule rr : registeredRules) {
+                if (matcher.match(pattern, rr.pattern)) {
+                    rules.add(rr.rule);
+                }
             }
+            matchCache.put(pattern, rules);
         }
+
         return rules;
     }
 
@@ -153,6 +163,10 @@ public class RegexRules
         {
             this.pattern = pattern;
             this.rule = rule;
+        }
+
+        public String toString() {
+            return this.pattern + " -> " + this.rule;
         }
     }
 

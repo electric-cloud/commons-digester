@@ -501,7 +501,7 @@ public class SetNestedPropertiesRule
                     DynaProperty desc = ( (DynaBean) top ).getDynaClass().getDynaProperty( propName );
                     if ( desc == null )
                     {
-                        throw new NoSuchMethodException( "Bean has no property named " + propName );
+                        throw new NoSuchMethodException( "Bean " + top + " has no property named " + propName );
                     }
                 }
                 else
@@ -510,7 +510,7 @@ public class SetNestedPropertiesRule
                     PropertyDescriptor desc = getPropertyDescriptor( top, propName );
                     if ( desc == null )
                     {
-                        throw new NoSuchMethodException( "Bean has no property named " + propName );
+                        throw new NoSuchMethodException( "Bean " + top + " has no property named " + propName );
                     }
                 }
             }
